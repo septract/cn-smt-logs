@@ -92,11 +92,27 @@ jobs:
       with: 
         repository: rems-project/cn-tutorial
         ref: mdd/dump-smt 
+        path: cn-tutorial 
     
     - name: Build SMT log bundle 
       run: |
+        cd cn-tutorial
         LOG_NAME=$(./build-smt-log.sh) 
-        echo $LOG_NAME 
+
+    - name: Checkout the log repo 
+      uses: actions/checkout@v4
+      with: 
+        path: cn-smt-logs
+      
+    - name: Commit and push the log 
+        run: |
+          cd cn-smt-logs
+          cp "$LOG_NAME" ./
+          git config --global user.name 'CN log bot'
+          git config --global user.email 'cn-smt-log-bot@users.noreply.github.com'
+          git add $(basename $LOG_NAME)
+          git commit -m "Monthly log bundle"
+          git push
 
     # - name: Run CN Tutorial CI tests
     #   run: |
