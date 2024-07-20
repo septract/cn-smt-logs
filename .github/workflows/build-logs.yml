@@ -91,7 +91,7 @@ jobs:
       uses: actions/checkout@v4
       with: 
         repository: rems-project/cn-tutorial
-        ref: mdd/build-smt 
+        ref: mdd/dump-smt 
     
     - name: Build SMT log bundle 
       run: |
