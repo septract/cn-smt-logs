@@ -100,7 +100,8 @@ jobs:
         opam switch ${{ matrix.version }}
         eval $(opam env --switch=${{ matrix.version }})
         CN=$OPAM_SWITCH_PREFIX/bin/cn
-        ./build-smt-log.sh $CN > ${{ env.LOG_FILE }}
+        FILE=$(./build-smt-log.sh "$CN")
+        echo "log_file=$FILE" >> "$GITHUB_ENV"
 
     - name: Checkout the log repo 
       uses: actions/checkout@v4
@@ -110,9 +111,9 @@ jobs:
     - name: Commit and push the log 
       run: |
         cd cn-smt-logs
-        cp ${{ env.LOG_FILE }} ./
+        cp "$log_file" ./
         git config --global user.name 'CN log bot'
         git config --global user.email 'cn-smt-log-bot@users.noreply.github.com'
-        git add $(basename ${{ env.LOG_FILE }})
+        git add $(basename $log_file)
         git commit -m "Monthly log bundle"
         git push
