@@ -96,10 +96,11 @@ jobs:
     
     - name: Build SMT log bundle 
       run: |
-        ls
         cd cn-tutorial 
+        opam switch ${{ matrix.version }}
+        eval $(opam env --switch=${{ matrix.version }})
         CN=$OPAM_SWITCH_PREFIX/bin/cn
-        echo $(./build-smt-log.sh $CN) > ${{ env.LOG_FILE }}
+        ./build-smt-log.sh $CN > ${{ env.LOG_FILE }}
 
     - name: Checkout the log repo 
       uses: actions/checkout@v4
