@@ -96,6 +96,7 @@ jobs:
     
     - name: Build SMT log bundle 
       run: |
+        cd cn-tutorial 
         CN=$OPAM_SWITCH_PREFIX/bin/cn
         LOG_NAME=$(./build-smt-log.sh $CN) 
 
