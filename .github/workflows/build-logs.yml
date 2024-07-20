@@ -96,8 +96,8 @@ jobs:
     
     - name: Build SMT log bundle 
       run: |
-        cd cn-tutorial
-        LOG_NAME=$(./build-smt-log.sh) 
+        CN=$OPAM_SWITCH_PREFIX/bin/cn
+        LOG_NAME=$(./build-smt-log.sh $CN) 
 
     - name: Checkout the log repo 
       uses: actions/checkout@v4
